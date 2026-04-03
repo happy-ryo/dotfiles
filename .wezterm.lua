@@ -101,10 +101,10 @@ config.keys = {
   { key = 'e', mods = mod_shift, action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
 
   -- Pane navigation
-  { key = 'LeftArrow',  mods = 'ALT', action = act.ActivatePaneDirection 'Left' },
-  { key = 'RightArrow', mods = 'ALT', action = act.ActivatePaneDirection 'Right' },
-  { key = 'UpArrow',    mods = 'ALT', action = act.ActivatePaneDirection 'Up' },
-  { key = 'DownArrow',  mods = 'ALT', action = act.ActivatePaneDirection 'Down' },
+  { key = 'LeftArrow',  mods = 'CTRL', action = act.ActivatePaneDirection 'Left' },
+  { key = 'RightArrow', mods = 'CTRL', action = act.ActivatePaneDirection 'Right' },
+  { key = 'UpArrow',    mods = 'CTRL', action = act.ActivatePaneDirection 'Up' },
+  { key = 'DownArrow',  mods = 'CTRL', action = act.ActivatePaneDirection 'Down' },
 
   -- Pane resize
   { key = 'LeftArrow',  mods = 'ALT|SHIFT', action = act.AdjustPaneSize { 'Left', 3 } },
@@ -128,6 +128,15 @@ config.keys = {
   { key = 'c', mods = mod, action = act.CopyTo 'ClipboardAndPrimarySelection' },
   { key = 'v', mods = mod, action = act.PasteFrom 'Clipboard' },
 
+  -- Claude Code in new pane
+  { key = 'c', mods = mod_shift, action = act.SplitPane {
+    direction = 'Right',
+    command = {
+      args = { 'C:/Program Files/Git/bin/bash.exe', '-l', '-c', 'claude --dangerously-load-development-channels server:claude-peers --dangerously-skip-permissions' },
+    },
+    size = { Percent = 50 },
+  } },
+
   -- Tab switching
   { key = '1', mods = 'ALT', action = act.ActivateTab(0) },
   { key = '2', mods = 'ALT', action = act.ActivateTab(1) },
@@ -142,6 +151,9 @@ config.enable_scroll_bar = false
 config.max_fps = 120
 config.animation_fps = 60
 
+-- IME
+config.use_ime = true
+
 -- Misc
 config.automatically_reload_config = true
 config.check_for_updates = true
@@ -154,5 +166,13 @@ config.visual_bell = {
 }
 config.default_cursor_style = 'BlinkingBar'
 config.cursor_blink_rate = 500
+
+-- Startup: 1 left (tall) + 3 right (stacked)
+wezterm.on('gui-startup', function(cmd)
+  local tab, left_pane, window = wezterm.mux.spawn_window(cmd or {})
+  local right_pane = left_pane:split { direction = 'Right', size = 0.5 }
+  local right_mid = right_pane:split { direction = 'Bottom', size = 0.67 }
+  right_mid:split { direction = 'Bottom', size = 0.5 }
+end)
 
 return config
