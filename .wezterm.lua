@@ -167,4 +167,28 @@ config.visual_bell = {
 config.default_cursor_style = 'BlinkingBar'
 config.cursor_blink_rate = 500
 
+-- Startup welcome message
+wezterm.on('gui-startup', function(cmd)
+  local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
+
+  local mod_key = is_windows and 'Ctrl' or 'Cmd'
+  local welcome = '\r\n'
+    .. '\x1b[1;35m  WezTerm Quick Reference\x1b[0m\r\n'
+    .. '\x1b[90m  ───────────────────────────────────\x1b[0m\r\n'
+    .. '  \x1b[36m' .. mod_key .. '+T\x1b[0m            New tab\r\n'
+    .. '  \x1b[36m' .. mod_key .. '+D\x1b[0m            Split horizontal\r\n'
+    .. '  \x1b[36m' .. mod_key .. '+Shift+E\x1b[0m     Split vertical\r\n'
+    .. '  \x1b[36m' .. mod_key .. '+W\x1b[0m            Close pane\r\n'
+    .. '  \x1b[36mCtrl+Arrows\x1b[0m        Navigate panes\r\n'
+    .. '  \x1b[36mAlt+Shift+Arrows\x1b[0m   Resize panes\r\n'
+    .. '  \x1b[36mAlt+1~5\x1b[0m            Switch tab\r\n'
+    .. '  \x1b[36mAlt+L\x1b[0m              Launcher\r\n'
+    .. '  \x1b[36m' .. mod_key .. '+Shift+P\x1b[0m     Command palette\r\n'
+    .. '  \x1b[36m' .. mod_key .. '+Shift+F\x1b[0m     Search\r\n'
+    .. '  \x1b[36m' .. mod_key .. '+Shift+C\x1b[0m     Claude Code pane\r\n'
+    .. '\x1b[90m  ───────────────────────────────────\x1b[0m\r\n\r\n'
+
+  pane:inject_output(welcome)
+end)
+
 return config
