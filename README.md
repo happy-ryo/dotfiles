@@ -6,10 +6,14 @@ WezTerm の設定ファイル。Windows / macOS 両対応。
 
 ### 1. フォントのインストール
 
-```bash
+```powershell
 # Windows
-winget install Nerdfonts.JetBrainsMono
+winget install DEVCOM.JetBrainsMonoNerdFont
+```
 
+winget でインストールできない場合は [Nerd Fonts Releases](https://github.com/ryanoasis/nerd-fonts/releases) から `JetBrainsMono.zip` をダウンロードして手動でインストールしてください。
+
+```bash
 # macOS
 brew install --cask font-jetbrains-mono-nerd-font
 ```
