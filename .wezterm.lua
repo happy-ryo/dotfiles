@@ -167,12 +167,4 @@ config.visual_bell = {
 config.default_cursor_style = 'BlinkingBar'
 config.cursor_blink_rate = 500
 
--- Startup: 1 left (tall) + 3 right (stacked)
-wezterm.on('gui-startup', function(cmd)
-  local tab, left_pane, window = wezterm.mux.spawn_window(cmd or {})
-  local right_pane = left_pane:split { direction = 'Right', size = 0.5 }
-  local right_mid = right_pane:split { direction = 'Bottom', size = 0.67 }
-  right_mid:split { direction = 'Bottom', size = 0.5 }
-end)
-
 return config
