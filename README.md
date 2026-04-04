@@ -16,14 +16,15 @@ brew install --cask font-jetbrains-mono-nerd-font
 
 ### 2. 設定ファイルの配置
 
-```bash
-# クローン
-git clone https://github.com/happy-ryo/dotfiles.git ~/dotfiles
-
-# シンボリックリンク (Windows - 管理者権限の PowerShell)
+```powershell
+# Windows (PowerShell - 管理者権限)
+git clone https://github.com/happy-ryo/dotfiles.git $HOME\dotfiles
 New-Item -ItemType SymbolicLink -Path "$HOME\.wezterm.lua" -Target "$HOME\dotfiles\.wezterm.lua"
+```
 
-# シンボリックリンク (macOS)
+```bash
+# macOS
+git clone https://github.com/happy-ryo/dotfiles.git ~/dotfiles
 ln -s ~/dotfiles/.wezterm.lua ~/.wezterm.lua
 ```
 
